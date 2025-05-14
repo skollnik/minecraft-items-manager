@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ids_1_21_4 from "./data/ids_1.21.4.json";
-import ids_1_21_4_lan_en_us_raw from "./data/ids_1.21.4_lan_en_us.json" with { type: "json" };
+import ids_1_21_5 from "./data/ids_1.21.5.json";
+import ids_1_21_5_lan_en_us_raw from "./data/ids_1.21.5_lan_en_us.json" with { type: "json" };
 import legacyRaw from "./data/legacy.json";
 import { Tabs } from "./components/Tabs";
 import { ItemsManager } from "./components/ItemsManager";
@@ -10,7 +10,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import { saveToLocalStorage, loadFromLocalStorage } from "./utils/storage";
 import { CategoryLegend } from "./components/CategoryLegend";
 
-const ids_1_21_4_lan_en_us = ids_1_21_4_lan_en_us_raw as LanguageMap;
+const ids_1_21_4_lan_en_us = ids_1_21_5_lan_en_us_raw as LanguageMap;
 const legacyMap = legacyRaw as LegacyMap;
 
 const App: React.FC = () => {
@@ -37,7 +37,7 @@ const App: React.FC = () => {
       setCategories(savedData.categories);
       setItems(updatedItems);
     } else {
-        const mappedItems = ids_1_21_4.map((id: string) => {
+        const mappedItems = ids_1_21_5.map((id: string) => {
         const name = ids_1_21_4_lan_en_us[id] || id;
         const legacyId = legacyMap[id];
         return { id, name, legacyId, categories: [] };
