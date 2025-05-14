@@ -36,6 +36,10 @@ export const CategoryManager = ({
   const [newCategory, setNewCategory] = useState("");
   const [selectedColor, setSelectedColor] = useState(predefinedColors[0].value);
 
+  // Dodaj state za editovanje
+  const [editingCategory, setEditingCategory] = useState<string | null>(null);
+  const [editingName, setEditingName] = useState("");
+
   const handleAddCategory = () => {
     if (newCategory.trim() === "") {
       toast.error("Category name cannot be empty!");
@@ -69,6 +73,36 @@ export const CategoryManager = ({
       }));
       setItems(updatedItems);
     }
+  };
+
+  const handleEditCategory = (oldName: string, newName: string) => {
+    if (newName.trim() === "") {
+      toast.error("Category name cannot be empty!");
+      return;
+    }
+    if (
+      categories.some(
+        (category) => category.name === newName && category.name !== oldName
+      )
+    ) {
+      toast.error("Category already exists!");
+      return;
+    }
+    setCategories(
+      categories.map((category) =>
+        category.name === oldName ? { ...category, name: newName } : category
+      )
+    );
+    setItems(
+      items.map((item) => ({
+        ...item,
+        categories: item.categories?.map((cat) =>
+          cat.name === oldName ? { ...cat, name: newName } : cat
+        ),
+      }))
+    );
+    setEditingCategory(null);
+    setEditingName("");
   };
 
   return (
@@ -108,13 +142,65 @@ export const CategoryManager = ({
           {categories.map((category, index) => (
             <li key={index} className="flex items-center gap-2 mb-1 text-white">
               <div className={`w-4 h-4 rounded ${category.color}`}></div>
-              <span>{category.name}</span>
-              <button
-                onClick={() => handleDeleteCategory(category.name)}
-                className="text-red-500 hover:underline ml-auto cursor-pointer"
-              >
-                Delete
-              </button>
+              {editingCategory === category.name ? (
+                <>
+                  <input
+                    type="text"
+                    value={editingName}
+                    onChange={(e) => setEditingName(e.target.value)}
+                    className="bg-gray-700 text-white rounded px-2"
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleEditCategory(category.name, editingName);
+                      }
+                      if (e.key === "Escape") {
+                        setEditingCategory(null);
+                      }
+                    }}
+                  />
+                  <div className="flex gap-2 ml-2">
+                    <button
+                      onClick={() =>
+                        handleEditCategory(category.name, editingName)
+                      }
+                      className="text-green-700 hover:underline cursor-pointer"
+                      title="Save"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingCategory(null)}
+                      className="text-gray-700 hover:underline cursor-pointer"
+                      title="Cancel"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span>{category.name}</span>
+                  <div className="flex gap-2 ml-auto">
+                    <button
+                      onClick={() => {
+                        setEditingCategory(category.name);
+                        setEditingName(category.name);
+                      }}
+                      className="text-blue-400 hover:underline"
+                      title="Edit"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCategory(category.name)}
+                      className="text-red-500 hover:underline cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>
