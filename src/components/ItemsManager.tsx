@@ -103,8 +103,8 @@ export const ItemsManager = ({
           Show only uncategorized items
         </label>
         <div
-          className={`relative inline-flex items-center h-6 rounded-full w-11 ${
-            showUncategorizedOnly ? "bg-blue-600" : "bg-gray-400"
+          className={`relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer ${
+            showUncategorizedOnly ? "bg-gray-800" : "bg-gray-400"
           }`}
           onClick={() => setShowUncategorizedOnly(!showUncategorizedOnly)}
         >
@@ -115,6 +115,7 @@ export const ItemsManager = ({
           />
         </div>
       </div>
+      <div className="flex mb-4 gap-1 text-xl">Total Items: <p className="font-bold">{filteredItems.length}</p></div>
       <ItemGrid items={filteredItems} onItemClick={setSelectedItem} />
       {selectedItem && (
         <CategoryModal
