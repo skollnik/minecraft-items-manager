@@ -6,8 +6,8 @@ interface CategoryLegendProps {
 
 export const CategoryLegend = ({ categories }: CategoryLegendProps) => {
   return (
-    <div className="absolute top-4 left-4 bg-gray-800 text-white p-4 rounded-lg shadow-lg min-w-80 max-w-80">
-      <h3 className="text-lg font-bold mb-2">Categories</h3>
+    <div className="absolute top-4 left-4 bottom-4 bg-gray-800 text-white p-4 rounded-lg shadow-lg min-w-80 max-w-80 max-h-screen overflow-y-auto no-scrollbar">
+      <h3 className="text-lg font-bold mb-2">Categories ({categories.length})</h3>
       <ul className="space-y-2">
         {categories.map((category) => (
           <li key={category.name} className="flex items-center gap-2">
