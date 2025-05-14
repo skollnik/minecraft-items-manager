@@ -10,7 +10,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import { saveToLocalStorage, loadFromLocalStorage } from "./utils/storage";
 import { CategoryLegend } from "./components/CategoryLegend";
 
-const ids_1_21_4_lan_en_us = ids_1_21_5_lan_en_us_raw as LanguageMap;
+const ids_1_21_5_lan_en_us = ids_1_21_5_lan_en_us_raw as LanguageMap;
 const legacyMap = legacyRaw as LegacyMap;
 
 const App: React.FC = () => {
@@ -38,7 +38,7 @@ const App: React.FC = () => {
       setItems(updatedItems);
     } else {
         const mappedItems = ids_1_21_5.map((id: string) => {
-        const name = ids_1_21_4_lan_en_us[id] || id;
+        const name = ids_1_21_5_lan_en_us[id] || id;
         const legacyId = legacyMap[id];
         return { id, name, legacyId, categories: [] };
       });

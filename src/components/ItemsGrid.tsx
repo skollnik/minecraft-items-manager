@@ -19,7 +19,6 @@ export const ItemGrid = ({
           alt={item.name}
           className="w-16 h-16 mb-2"
           loading="lazy"
-          onError={(e) => (e.currentTarget.src = "img/loading.gif")}
         />
         <div className="text-center">
           <p className="text-sm font-medium">{item.name}</p>
